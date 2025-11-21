@@ -1,3 +1,4 @@
+
 var map = L.map('map').setView([41,69],10);
 L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{maxZoom:20}).addTo(map);
 
@@ -34,7 +35,6 @@ fetch('data/oqoltin.geojson')
     let div=document.createElement('div');
     div.className='item';
 
-    // TO‘G‘RI ATRIBUT NOMLARI
     let kontur = f.properties.Kontur;
     let massiv = f.properties.Massiv;
 

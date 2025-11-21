@@ -1,60 +1,72 @@
 
-var map = L.map('map').setView([41,69],10);
-L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{maxZoom:20}).addTo(map);
+var map = L.map('map').setView([40.9, 71.0], 11);
 
-let layerGroup;
-function classify(b){
- b=parseFloat(b);
- if(b<39) return '#ff0000';
- if(b<=60) return '#ff8c00';
- if(b<=80) return '#00cc44';
- return '#006600';
+L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    maxZoom: 20
+}).addTo(map);
+
+function classify(b) {
+    b = parseFloat(b);
+    if (b < 39) return '#ff0000';
+    if (b <= 60) return '#ff8c00';
+    if (b <= 80) return '#00cc44';
+    return '#006600';
 }
 
-fetch('data/oqoltin.geojson')
-.then(r=>r.json())
-.then(data=>{
- let list=document.getElementById('list');
+let list = document.getElementById("list");
 
- layerGroup=L.geoJSON(data,{
-  style:f=>{
-    let c=classify(f.properties.Ball);
-    return {color:c,fillColor:c,fillOpacity:0.5,weight:2};
-  },
+// FAOL GEOJSON YUKLASH
+fetch("data/oqoltin.geojson")
+    .then(r => r.json())
+    .then(json => {
 
-  onEachFeature:(f,l)=>{
+        L.geoJSON(json, {
+            style: f => {
+                let c = classify(f.properties.Ball);
+                return {
+                    color: c,
+                    fillColor: c,
+                    fillOpacity: 0.5,
+                    weight: 2
+                };
+            },
 
-    // Popup
-    l.bindPopup(
-      Object.entries(f.properties)
-      .map(v=>v[0]+": "+v[1])
-      .join("<br>")
-    );
+            onEachFeature: (f, layer) => {
 
-    // Chap panel uchun element
-    let div=document.createElement('div');
-    div.className='item';
+                // Popup
+                layer.bindPopup(`
+                    <b>Kontur:</b> ${f.properties.Kontur}<br>
+                    <b>Massiv:</b> ${f.properties.Massiv}<br>
+                    <b>Ball:</b> ${f.properties.Ball}<br>
+                    <b>Gumus:</b> ${f.properties.Gumus}<br>
+                    <b>Fosfor:</b> ${f.properties.Fosfor}<br>
+                    <b>Kaliy:</b> ${f.properties.Kaliy}<br>
+                    <b>Sho'rlanish:</b> ${f.properties.Shorlanish}<br>
+                    <b>Mexanika:</b> ${f.properties.Mexanika}<br>
+                `);
 
-    let kontur = f.properties.Kontur;
-    let massiv = f.properties.Massiv;
+                // Chap ro‘yxat
+                let div = document.createElement("div");
+                div.className = "item";
+                div.innerHTML = `Kontur: ${f.properties.Kontur} | Massiv: ${f.properties.Massiv}`;
+                div.onclick = () => {
+                    map.fitBounds(layer.getBounds());
+                    layer.openPopup();
+                };
 
-    div.textContent = "Kontur: " + kontur + " | Massiv: " + massiv;
+                list.appendChild(div);
+            }
+        }).addTo(map);
+    });
 
-    div.onclick=()=>{ 
-        map.fitBounds(l.getBounds()); 
-        l.openPopup(); 
-    };
+// QIDIRUV
+document.getElementById("searchBtn").onclick = () => {
+    let q = document.getElementById("search").value.toLowerCase();
+    let items = document.querySelectorAll(".item");
 
-    list.appendChild(div);
-  }
- }).addTo(map);
-
- // Qidiruv
- document.getElementById('searchBtn').onclick=()=>{
-   let q=document.getElementById('search').value.toLowerCase();
-   let items=document.querySelectorAll('.item');
-   items.forEach(i=>{
-     i.style.display = i.textContent.toLowerCase().includes(q)?'block':'none';
-   });
- };
-});
+    items.forEach(i => {
+        i.style.display = i.textContent.toLowerCase().includes(q)
+            ? "block"
+            : "none";
+    });
+};

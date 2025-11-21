@@ -4,7 +4,6 @@
 <head>
 <meta charset="utf-8">
 <title>Tuproq Pasporti</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <link rel="stylesheet" href="css/style.css"/>
@@ -12,29 +11,21 @@
 <body>
 
 <div id="topbar">
-  <img id="logo" src="assets/logo.png" alt="Logo"/>
-  <div id="title-block">
-    <div id="title-inst">Tuproqshunoslik va Agrokimyoviy Tadqiqotlar Instituti</div>
-    <div id="title-main">TUPROQ PASPORTI</div>
-  </div>
+ <img id="logo" src="assets/logo.png"/>
+ <div id="title-block">
+  <div><b>Tuproqshunoslik va Agrokimyoviy Tadqiqotlar Instituti</b></div>
+  <div style="font-size:20px;">TUPROQ PASPORTI</div>
+ </div>
+</div>
+
+<div id="leftpanel">
+ <input id="search" placeholder="Izlash: kontur/massiv" style="width:100%;padding:5px;">
+ <button id="searchBtn" style="width:100%;margin-top:5px;">Izlash</button>
+ <h3>Konturlar ro'yxati</h3>
+ <div id="list"></div>
 </div>
 
 <div id="map"></div>
-
-<div id="bottom-block">
-  <h3>Gumus ta'minlanganlik darajasi bo‘yicha o‘g‘it me'yori</h3>
-  <table border="1" cellspacing="0" cellpadding="6" style="width:100%; border-collapse:collapse; text-align:center;">
-    <tr style="background:#eaeaea; font-weight:bold;">
-        <td>№</td><td>Guruh</td><td>Ta’minlanganlik, %</td><td>Tavsiya miqdori, t/ga</td>
-    </tr>
-    <tr style="background:#ffff99;"><td>1</td><td>Juda kam</td><td>&lt;0.40</td><td><b>30</b></td></tr>
-    <tr style="background:#ccff66;"><td>2</td><td>Kam</td><td>0.41–0.80</td><td><b>25</b></td></tr>
-    <tr style="background:#99ff99;"><td>3</td><td>O‘rtacha</td><td>0.81–1.20</td><td><b>20</b></td></tr>
-    <tr style="background:#66ff66;"><td>4</td><td>Ko‘proq</td><td>1.21–1.60</td><td><b>10</b></td></tr>
-    <tr style="background:#33ff99;"><td>5</td><td>Ko‘p</td><td>1.61–2.00</td><td><b>5</b></td></tr>
-    <tr style="background:#009966; color:white;"><td>6</td><td>Yuqori</td><td>&gt;2.01</td><td><b>Tavsiya etilmaydi</b></td></tr>
-  </table>
-</div>
 
 <script src="js/app.js"></script>
 </body>
